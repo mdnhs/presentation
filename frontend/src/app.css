@@ -1,0 +1,77 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "./tokens.css";
+
+/* Theme is toggled with a `dark` class on <html>; tokens.css re-derives every colour under it. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* shadcn-svelte state variants: its components write data-open:, data-checked:, data-horizontal: …,
+   while bits-ui marks state as data-state="open" / data-orientation="horizontal". */
+@custom-variant data-open (&:where([data-state="open"]));
+@custom-variant data-closed (&:where([data-state="closed"]));
+@custom-variant data-checked (&:where([data-state="checked"]));
+@custom-variant data-unchecked (&:where([data-state="unchecked"]));
+@custom-variant data-horizontal (&:where([data-orientation="horizontal"]));
+@custom-variant data-vertical (&:where([data-orientation="vertical"]));
+
+@layer base {
+  /* Tailwind v4 resets buttons to cursor: default; every clickable control shows a pointer. */
+  button, [role="button"], a[href], summary, select, label[for],
+  input[type="checkbox"], input[type="radio"], input[type="file"], input[type="color"],
+  [role="option"], [role="menuitem"], [role="menuitemradio"], [role="menuitemcheckbox"],
+  [role="tab"], [role="checkbox"], [role="radio"], [role="switch"], [role="combobox"], [role="slider"],
+  [data-slot="select-trigger"], [data-slot="toggle-group-item"], [data-slot="slider-thumb"] {
+    cursor: pointer;
+  }
+  :is(button, [role="button"], [role="option"], [role="checkbox"], [role="radio"], [role="switch"], select, input):is(:disabled, [aria-disabled="true"], [data-disabled]) {
+    cursor: not-allowed;
+  }
+
+  /* shadcn-svelte components draw plain `border`s and expect this colour. */
+  *, ::before, ::after { border-color: var(--color-border); }
+  html, body { overflow-x: clip; }
+  /* Thin, low-contrast scrollbars everywhere. */
+  * { scrollbar-width: thin; scrollbar-color: var(--color-rule-2) transparent; }
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--color-rule-2); border-radius: 999px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--color-muted-foreground); }
+  body {
+    /* Soft mint wash behind the floating sidebar and main panel. */
+    background:
+      radial-gradient(60rem 40rem at 0% 0%, var(--color-canvas-2), transparent 60%),
+      radial-gradient(50rem 40rem at 100% 100%, var(--color-canvas-2), transparent 60%),
+      var(--color-canvas);
+    background-attachment: fixed;
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    font-feature-settings: "cv11", "ss01";
+  }
+  h1, h2, h3 { overflow-wrap: break-word; min-width: 0; letter-spacing: -0.015em; }
+  ::selection { background: color-mix(in oklab, var(--color-focus) 20%, transparent); }
+  :focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+  .fig { font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+}
+
+/* Reusable building blocks (usable with @apply and as classes). */
+@utility card {
+  @apply rounded-card bg-cotton shadow-card;
+}
+/* Segmented control: white track, the chosen item a soft mint pill. */
+@utility groove {
+  @apply flex items-center gap-1 rounded-input bg-cotton p-1 shadow-groove;
+}
+@utility groove-item {
+  @apply flex h-7 flex-1 items-center justify-center gap-1.5 rounded-lg px-3 text-sm font-medium whitespace-nowrap text-muted-foreground
+    transition-[background-color,color,box-shadow] duration-150 hover:text-ink
+    focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-focus
+    aria-pressed:bg-mint aria-pressed:text-brand-2 aria-[current=page]:bg-mint aria-[current=page]:text-brand-2;
+}
+/* Shortcut hint inside a search box; hidden once the box is focused or has text. */
+@utility kbd-hint {
+  @apply pointer-events-none absolute top-1/2 right-2.5 hidden h-5 -translate-y-1/2 items-center rounded-md bg-cotton px-1.5 font-sans text-[11px] font-medium text-muted-foreground shadow-groove
+    peer-focus:hidden peer-[:not(:placeholder-shown)]:hidden sm:inline-flex;
+}

@@ -1,0 +1,10 @@
+node_modules/
+.DS_Store
+.env
+
+# PocketBase binary + local data (downloaded / generated)
+backend/pocketbase
+backend/pb_data/
+backend/pb_public/
+
+frontend/dist/

@@ -1,0 +1,92 @@
+/* Design tokens. @theme: each one is also a Tailwind utility (bg-paper, text-ink, rounded-card, shadow-card). */
+@theme static {
+  /* WorkHub-style, tuned calm: a faint sage wash, soft white panels, one muted sage brand colour. */
+  --color-canvas: oklch(94.6% 0.016 160);    /* page background behind the floating panels */
+  --color-canvas-2: oklch(92.2% 0.024 160);
+  --color-paper: oklch(97.6% 0.008 150);    /* main panel: off-white, no glare */
+  --color-paper-2: oklch(95.4% 0.011 155);  /* stat tiles, table heads, column heads */
+  --color-paper-3: oklch(92.8% 0.014 155);  /* hover fills, progress track */
+  --color-cotton: oklch(99% 0.005 150);          /* cards */
+  --color-mint: oklch(94.6% 0.024 160);     /* tinted cards and icon tiles */
+  --color-lane: oklch(93.4% 0.016 160);  /* board columns: a sunken sage lane so cards stand off it */
+  --color-ink: oklch(30% 0.014 190); --color-ink-2: oklch(42% 0.013 190); --color-muted-foreground: oklch(58% 0.011 190);
+  --color-rule: oklch(91.6% 0.01 160); --color-rule-2: oklch(87.6% 0.012 160); --color-field: oklch(87% 0.012 160);
+  --color-brand: oklch(62% 0.085 165); --color-brand-2: oklch(52% 0.08 165); --color-brand-ink: oklch(99% 0.006 160);
+  --color-board: var(--color-brand); --color-board-2: var(--color-brand-2); --color-board-type: var(--color-brand-ink);
+  --color-focus: oklch(62% 0.085 165);
+  --color-error: oklch(64% 0.13 25); --color-success: oklch(62% 0.085 165); --color-warn: oklch(76% 0.1 70);
+
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-sans); --font-display: var(--font-sans);
+
+  --text-figure: 1.75rem;
+
+  /* shadcn-svelte components round with rounded-lg/md: match the app's 10px inputs and buttons. */
+  --radius-lg: 10px; --radius-md: 8px; --radius-xl: 14px;
+  --radius-card: 16px; --radius-input: 10px; --radius-pill: 999px; --radius-stock: 10px;
+  /* Borderless cards: a soft two-layer shadow lifts them off the panel. */
+  --shadow-card: 0 1px 2px oklch(40% 0.03 160 / 0.03), 0 6px 20px -10px oklch(40% 0.04 160 / 0.1);
+  --shadow-stock: 0 0 0 1px var(--color-rule), 0 1px 2px oklch(40% 0.05 160 / 0.05);
+  --shadow-lift: 0 2px 4px oklch(40% 0.05 160 / 0.05), 0 12px 28px -8px oklch(40% 0.06 160 / 0.2);
+  --shadow-groove: inset 0 0 0 1px var(--color-rule);
+  --shadow-float: 0 1px 2px oklch(40% 0.03 160 / 0.04), 0 12px 32px -14px oklch(40% 0.04 160 / 0.12);
+  --shadow-panel: 0 24px 64px -12px oklch(25% 0.05 160 / 0.3), 0 0 0 1px var(--color-rule);
+}
+
+/* shadcn-svelte's colour names, pointed at the tokens above so its components wear this theme
+   (and follow .dark automatically, since .dark re-declares the tokens on the same <html>). */
+@theme inline {
+  --color-background: var(--color-paper);
+  --color-foreground: var(--color-ink);
+  --color-card: var(--color-cotton);
+  --color-card-foreground: var(--color-ink);
+  --color-popover: var(--color-cotton);
+  --color-popover-foreground: var(--color-ink);
+  --color-primary: var(--color-brand);
+  --color-primary-foreground: var(--color-brand-ink);
+  --color-secondary: var(--color-paper-2);
+  --color-secondary-foreground: var(--color-ink-2);
+  --color-muted: var(--color-paper-2);
+  --color-accent: var(--color-paper-3);
+  --color-accent-foreground: var(--color-ink);
+  --color-destructive: var(--color-error);
+  --color-border: var(--color-rule);
+  --color-input: var(--color-field);
+  --color-ring: var(--color-focus);
+}
+
+:root {
+  color-scheme: light;
+  /* Plain shadcn variables, for components that read them directly (color-mix, svelte-sonner). */
+  --background: var(--color-paper); --foreground: var(--color-ink);
+  --popover: var(--color-cotton); --popover-foreground: var(--color-ink);
+  --secondary: var(--color-paper-2); --border: var(--color-rule);
+  --normal-bg: var(--color-cotton); --normal-text: var(--color-ink); --normal-border: var(--color-rule);
+  --container: 1600px; --gutter: 16px;
+  /* shadcn overlays (dialogs, popovers, tooltips) sit at z-50, above the nav. */
+  --z-sticky-nav: 20; --z-modal: 50; --z-toast: 100;
+}
+
+/* Roomier page gutters from sm up; phones keep 16px. */
+@media (min-width: 640px) {
+  :root { --gutter: 24px; }
+}
+
+.dark {
+  color-scheme: dark;
+  --color-canvas: oklch(17% 0.01 175); --color-canvas-2: oklch(20% 0.018 165);
+  --color-paper: oklch(20% 0.009 175); --color-paper-2: oklch(23.5% 0.01 175); --color-paper-3: oklch(27% 0.011 175);
+  --color-cotton: oklch(23% 0.01 175);
+  --color-mint: oklch(27% 0.025 165);
+  --color-lane: oklch(17.6% 0.009 175);
+  --color-ink: oklch(91% 0.006 170); --color-ink-2: oklch(82% 0.008 170); --color-muted-foreground: oklch(67% 0.01 175);
+  --color-rule: oklch(28% 0.014 170); --color-rule-2: oklch(34% 0.016 170); --color-field: oklch(34% 0.016 170);
+  --color-brand: oklch(70% 0.08 165); --color-brand-2: oklch(76% 0.075 165); --color-brand-ink: oklch(18% 0.02 170);
+  --color-focus: oklch(72% 0.08 165);
+  --color-error: oklch(72% 0.11 25); --color-warn: oklch(80% 0.09 70);
+  /* Dark: no borders either; cards sit lighter than the panel. */
+  --shadow-card: 0 1px 2px oklch(0% 0 0 / 0.3);
+  --shadow-stock: 0 0 0 1px var(--color-rule);
+  --shadow-lift: 0 8px 24px -8px oklch(0% 0 0 / 0.5);
+  --shadow-float: 0 0 0 1px var(--color-rule);
+}

@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Project Dashboard</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23171717'/><path d='M9 21v-6m7 6V11m7 10v-8' stroke='white' stroke-width='3' stroke-linecap='round'/></svg>" />
+    <script>
+      // Apply saved theme before first paint (avoids a light flash in dark mode).
+      try { if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark') } catch (_) {}
+    </script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

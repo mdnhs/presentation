@@ -1,0 +1,10 @@
+.git
+.claude
+.hallmark
+**/node_modules
+**/.DS_Store
+.env
+backend/pocketbase
+backend/pb_data
+backend/pb_public
+frontend/dist
