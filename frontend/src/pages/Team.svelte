@@ -22,6 +22,8 @@
   import * as ToggleGroup from '$lib/components/ui/toggle-group/index.js'
   import * as AlertDialog from '$lib/components/ui/alert-dialog/index.js'
   import { Checkbox } from '$lib/components/ui/checkbox/index.js'
+  import SkTable from '$lib/components/skeletons/SkTable.svelte'
+  import Bone from '$lib/components/skeletons/Bone.svelte'
 
   let members = $state([])
   let loading = $state(true)
@@ -175,7 +177,7 @@
           <span class="grid size-10 shrink-0 place-items-center rounded-xl {key === 'suspended' ? 'bg-paper-3 text-muted-foreground' : 'bg-mint text-brand-2'}"><Icon name={icon} size={18} /></span>
           <span class="min-w-0">
             <span class="block truncate text-xs font-medium text-muted-foreground">{label}</span>
-            <span class="fig block text-2xl leading-tight font-semibold text-ink">{loading ? '–' : counts[key]}</span>
+            <span class="fig block text-2xl leading-tight font-semibold text-ink">{#if loading}<Bone class="mt-1 h-6 w-10" />{:else}{counts[key]}{/if}</span>
           </span>
         </Button>
       {/each}
@@ -227,7 +229,7 @@
 
       <!-- Members -->
       {#if loading}
-        <div class="space-y-2 p-5">{#each Array(4) as _, i (i)}<Skeleton class="h-14 rounded-input bg-paper-3" />{/each}</div>
+        <SkTable rows={4} columns={[{ kind: 'check', class: 'w-10' }, { kind: 'person' }, { kind: 'badge' }, { kind: 'badge' }, { kind: 'short' }, { kind: 'actions', head: false }]} />
       {:else}
         <Table.Root>
           <Table.Header>

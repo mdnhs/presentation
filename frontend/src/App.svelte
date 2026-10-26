@@ -13,6 +13,7 @@
   import * as Tooltip from '$lib/components/ui/tooltip/index.js'
   import * as Sheet from '$lib/components/ui/sheet/index.js'
   import { Button } from '$lib/components/ui/button/index.js'
+  import SkPage from '$lib/components/skeletons/SkPage.svelte'
 
   // Pages are code-split; charts (ApexCharts) only load when a chart view opens.
   const PAGES = {
@@ -86,7 +87,9 @@
             </div>
           </div>
         {/if}
-        {#await pagePromise then mod}
+        {#await pagePromise}
+          <SkPage />
+        {:then mod}
           <mod.default />
         {/await}
       </main>

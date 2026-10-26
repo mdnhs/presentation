@@ -17,6 +17,7 @@
   import { Skeleton } from '$lib/components/ui/skeleton/index.js'
   import * as Card from '$lib/components/ui/card/index.js'
   import * as ToggleGroup from '$lib/components/ui/toggle-group/index.js'
+  import SkOverview from '$lib/components/skeletons/SkOverview.svelte'
 
   /** fill: stretch to the parent's height (presentation mode's fixed 16:9 stage) */
   let { fill = false } = $props()
@@ -40,17 +41,7 @@
 </script>
 
 {#if data.loading}
-  <div class="grid gap-5 xl:grid-cols-12">
-    <div class="space-y-5 xl:col-span-8">
-      <Card.Root class="card rounded-card block gap-0 py-0 ring-0 h-52 p-5"><Skeleton class="h-full rounded-input bg-paper-3" /></Card.Root>
-      <Card.Root class="card rounded-card block gap-0 py-0 ring-0 h-36 p-5"><Skeleton class="h-full rounded-input bg-paper-3" /></Card.Root>
-      <Card.Root class="card rounded-card block gap-0 py-0 ring-0 h-80 p-5"><Skeleton class="h-full rounded-input bg-paper-3" /></Card.Root>
-    </div>
-    <div class="space-y-5 xl:col-span-4">
-      <Card.Root class="card rounded-card block gap-0 py-0 ring-0 h-72 p-5"><Skeleton class="h-full rounded-input bg-paper-3" /></Card.Root>
-      <Card.Root class="card rounded-card block gap-0 py-0 ring-0 h-64 p-5"><Skeleton class="h-full rounded-input bg-paper-3" /></Card.Root>
-    </div>
-  </div>
+  <SkOverview {fill} />
 {:else}
   <!-- The 16:9 stage is always 1920px wide, so fill mode can't rely on viewport breakpoints. -->
   <div class="grid gap-5 {fill ? 'h-full grid-cols-12' : 'xl:grid-cols-12'}">

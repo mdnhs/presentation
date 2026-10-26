@@ -11,6 +11,8 @@
   import { Button } from '$lib/components/ui/button/index.js'
   import { Input } from '$lib/components/ui/input/index.js'
   import * as Select from '$lib/components/ui/select/index.js'
+  import SkTicketList from '$lib/components/skeletons/SkTicketList.svelte'
+  import Bone from '$lib/components/skeletons/Bone.svelte'
 
   const ALL = '__all'
   let filter = $state('active') // active | open | in_progress | waiting | resolved | all
@@ -89,7 +91,7 @@
         <span class="grid size-10 shrink-0 place-items-center rounded-xl bg-mint text-brand-2"><Icon name={icon} size={18} /></span>
         <span class="min-w-0">
           <span class="block truncate text-xs font-medium text-muted-foreground">{label}</span>
-          <span class="fig block text-2xl leading-tight font-semibold text-ink">{support.loading ? '–' : counts[key]}</span>
+          <span class="fig block text-2xl leading-tight font-semibold text-ink">{#if support.loading}<Bone class="mt-1 h-6 w-10" />{:else}{counts[key]}{/if}</span>
         </span>
       </button>
     {/each}
@@ -97,7 +99,7 @@
       <span class="grid size-10 shrink-0 place-items-center rounded-xl {support.unreadCount ? 'bg-brand text-brand-ink' : 'bg-paper-3 text-muted-foreground'}"><Icon name="send" size={17} /></span>
       <span class="min-w-0">
         <span class="block truncate text-xs font-medium text-muted-foreground">Unread replies</span>
-        <span class="fig block text-2xl leading-tight font-semibold text-ink">{support.loading ? '–' : support.unreadCount}</span>
+        <span class="fig block text-2xl leading-tight font-semibold text-ink">{#if support.loading}<Bone class="mt-1 h-6 w-10" />{:else}{support.unreadCount}{/if}</span>
       </span>
     </div>
   </div>
@@ -139,7 +141,7 @@
 
     <!-- Tickets -->
     {#if support.loading}
-      <div class="space-y-2 px-5 pb-5">{#each Array(4) as _, i (i)}<div class="h-16 animate-pulse rounded-lg bg-paper-3"></div>{/each}</div>
+      <SkTicketList {staff} />
     {:else}
       <ul class="divide-y divide-rule border-t border-rule">
         {#each rows as t (t.id)}

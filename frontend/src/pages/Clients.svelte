@@ -8,6 +8,7 @@
   import { Skeleton } from '$lib/components/ui/skeleton/index.js'
   import * as Card from '$lib/components/ui/card/index.js'
   import * as Table from '$lib/components/ui/table/index.js'
+  import SkTable from '$lib/components/skeletons/SkTable.svelte'
 
   let search = $state('')
   let editing = $state(null)
@@ -59,9 +60,7 @@
     </div>
 
     {#if data.loading}
-      <div class="space-y-3 px-5 pb-5">
-        {#each Array(4) as _, i (i)}<Skeleton class="h-14 rounded-input bg-paper-3" />{/each}
-      </div>
+      <SkTable rows={5} columns={[{ kind: 'avatar' }, { kind: 'dates' }, { kind: 'short' }, { kind: 'chip' }, { kind: 'check', head: false, class: 'w-10' }]} />
     {:else}
       <Table.Root>
           <Table.Header>

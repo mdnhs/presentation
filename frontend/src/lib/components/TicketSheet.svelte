@@ -14,6 +14,7 @@
   import { Label } from '$lib/components/ui/label/index.js'
   import * as Sheet from '$lib/components/ui/sheet/index.js'
   import * as Select from '$lib/components/ui/select/index.js'
+  import SkThread from '$lib/components/skeletons/SkThread.svelte'
 
   let { ticketId, onclose } = $props()
 
@@ -169,7 +170,7 @@
         </article>
 
         {#if loading}
-          <div class="h-16 animate-pulse rounded-xl bg-paper-3"></div>
+          <SkThread />
         {:else}
           {#each messages as m (m.id)}
             {@const me = mine(m)}

@@ -13,6 +13,7 @@
   import { Switch } from '$lib/components/ui/switch/index.js'
   import { Skeleton } from '$lib/components/ui/skeleton/index.js'
   import * as Card from '$lib/components/ui/card/index.js'
+  import SkSettings from '$lib/components/skeletons/SkSettings.svelte'
 
   // shadcn Card without its own padding/ring, so it keeps the app's card look.
   const CARD = 'gap-0 overflow-visible rounded-card py-0 shadow-card ring-0'
@@ -117,9 +118,7 @@
       Only admins can change settings. Ask an admin if something here needs updating.
     </Card.Root>
   {:else if data.loading || !data.settings}
-    <div class="mt-6 space-y-5">
-      {#each Array(3) as _, i (i)}<Card.Root class="{CARD} h-48 p-6"><Skeleton class="h-5 w-40 rounded-input bg-paper-3" /><Skeleton class="mt-6 h-24 rounded-input bg-paper-3" /></Card.Root>{/each}
-    </div>
+    <div class="mt-6"><SkSettings /></div>
   {:else}
     <div class="mt-6">
     <VerticalTabs tabs={TABS} bind:value={tab} id="settings" label="Settings sections">

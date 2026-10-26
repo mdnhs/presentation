@@ -17,6 +17,7 @@
   import * as Card from '$lib/components/ui/card/index.js'
   import * as Select from '$lib/components/ui/select/index.js'
   import * as Table from '$lib/components/ui/table/index.js'
+  import SkTable from '$lib/components/skeletons/SkTable.svelte'
 
   let search = $state(route.query.q ?? '')
   // The top bar's search lands here as ?q=.
@@ -152,7 +153,7 @@
     </div>
 
     {#if data.loading}
-      <div class="space-y-2 p-5">{#each Array(6) as _, i (i)}<Skeleton class="h-11 rounded-input bg-paper-3" />{/each}</div>
+      <SkTable rows={8} columns={[{ kind: 'avatar' }, { kind: 'badge' }, { kind: 'bar', class: 'w-48' }, { kind: 'badge' }, { kind: 'short' }, { kind: 'chip' }]} />
     {:else}
       <Table.Root>
           <Table.Header>

@@ -11,6 +11,7 @@
   import { Button } from '$lib/components/ui/button/index.js'
   import { Input } from '$lib/components/ui/input/index.js'
   import { Label } from '$lib/components/ui/label/index.js'
+  import Bone from '$lib/components/skeletons/Bone.svelte'
 
   let { client } = $props()
 
@@ -85,7 +86,9 @@
   </div>
 
   {#if loading}
-    <div class="h-10 animate-pulse rounded-lg bg-paper-3"></div>
+    <div class="flex items-center gap-2 rounded-lg bg-paper-2 px-3 py-2" role="status" aria-label="Loading portal access">
+      <Bone class="size-4" /><Bone class="h-3.5 w-48" /><Bone class="ml-auto h-8 w-28 rounded-input" /><Bone class="h-8 w-20 rounded-input" />
+    </div>
   {:else if login}
     <div class="flex flex-wrap items-center gap-2 rounded-lg bg-paper-2 px-3 py-2">
       <Icon name="user" size={15} class="text-muted-foreground" />

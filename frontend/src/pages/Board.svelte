@@ -12,6 +12,7 @@
   import { Skeleton } from '$lib/components/ui/skeleton/index.js'
   import * as Card from '$lib/components/ui/card/index.js'
   import * as Select from '$lib/components/ui/select/index.js'
+  import SkBoardColumn from '$lib/components/skeletons/SkBoardColumn.svelte'
 
   // Column state for dnd-kit: { [statusId]: projectId[] } in display order.
   // Rebuilt from the store whenever data changes and no drag (or its save) is in progress.
@@ -136,14 +137,8 @@
     </div>
 
     {#if data.loading}
-      <div class="flex gap-4 overflow-hidden px-5 pb-5">
-        {#each Array(4) as _, i (i)}
-          <div class="min-w-[280px] flex-1 space-y-3">
-            <Skeleton class="h-10 rounded-input bg-paper-3" />
-            <Skeleton class="h-36 rounded-input bg-paper-3" />
-            <Skeleton class="h-36 rounded-input bg-paper-3" />
-          </div>
-        {/each}
+      <div class="flex gap-4 overflow-hidden px-5 pb-5" role="status" aria-label="Loading board">
+        {#each [3, 2, 2, 1] as cards, i (i)}<SkBoardColumn {cards} />{/each}
       </div>
     {:else if !data.sortedStatuses.length}
       <div class="grid place-items-center px-5 pt-10 pb-16 text-center">
