@@ -22,6 +22,7 @@ RUN apk add --no-cache ca-certificates tzdata wget unzip \
 WORKDIR /pb
 COPY backend/pb_migrations ./pb_migrations
 COPY backend/pb_hooks ./pb_hooks
+COPY --chmod=755 backend/docker-entrypoint.sh ./docker-entrypoint.sh
 COPY --from=web /app/pb_public ./pb_public
 
 EXPOSE 8090
@@ -29,4 +30,5 @@ VOLUME /pb/pb_data
 
 HEALTHCHECK --interval=30s --timeout=3s CMD wget -qO- http://127.0.0.1:8090/api/health || exit 1
 
-CMD ["/pb/pocketbase", "serve", "--http=0.0.0.0:8090", "--dir=/pb/pb_data", "--hooksDir=/pb/pb_hooks", "--hooksWatch=false", "--migrationsDir=/pb/pb_migrations", "--publicDir=/pb/pb_public"]
+# docker-entrypoint.sh: optional one-off import of pb_data/import.db.gz, then pocketbase serve.
+CMD ["/pb/docker-entrypoint.sh"]
